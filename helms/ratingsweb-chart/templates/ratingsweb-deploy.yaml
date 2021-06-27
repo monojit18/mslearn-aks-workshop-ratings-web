@@ -23,6 +23,12 @@ spec:
     spec:
       nodeSelector:
       {{ toYaml $deployment.nodeSelector | nindent 8 }}
+      {{ if $deployment.imagePullSecrets }}
+      {{- range $secret := $deployment.imagePullSecrets }}
+      imagePullSecrets:
+      - name: {{ $secret.name }}
+      {{- end}}
+      {{ end }}
       containers:
       {{- range $container := $deployment.containers }}
       - name: {{ $container.name }}

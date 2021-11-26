@@ -1,0 +1,29 @@
+tenantId=""
+subscriptionId=""
+clusterName="aks-train-cluster"
+resourceGroup="aks-train-rg"
+acrName=""
+
+az login --tenant $tenantId
+az aks get-credentials -g $resourceGroup -n $clusterName
+
+az acr build -t $acrName.azurecr.io/ratings-web:v1.0.0 -r $acrName .
+
+DEV
+===
+
+helm install ratingsweb-chart -n aks-train-dev ./ratingsweb-chart/ -f ./ratingsweb-chart/AKSTrain/values-dev.yaml
+helm upgrade ratingsweb-chart -n aks-train-dev ./ratingsweb-chart/ -f ./ratingsweb-chart/AKSTrain/values-dev.yaml
+helm uninstall ratingsweb-chart -n aks-train-dev
+
+QA
+==
+
+helm install ratingsweb-chart -n aks-train-qa ./ratingsweb-chart/ -f ./ratingsweb-chart/AKSTrain/values-qa.yaml
+helm upgrade ratingsweb-chart -n aks-train-qa ./ratingsweb-chart/ -f ./ratingsweb-chart/AKSTrain/values-qa.yaml
+helm uninstall ratingsweb-chart -n aks-train-qa
+
+
+
+
+

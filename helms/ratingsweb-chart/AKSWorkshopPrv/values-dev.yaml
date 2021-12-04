@@ -37,6 +37,7 @@ service:
   ports:
   - protocol: TCP
     port: 80
+    name: http
     targetPort: 3000
     
     

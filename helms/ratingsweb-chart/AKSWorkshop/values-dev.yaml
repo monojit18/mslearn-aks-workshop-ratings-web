@@ -3,8 +3,10 @@ deployment:
   namespace: aks-workshop-dev
   labels:
     app: ratingsweb-deploy
+    version: v1
   selectorLabels:
     app: ratingsweb-pod
+    version: v1
   replicas: 1
   strategyType: RollingUpdate
   maxSurge: 1
@@ -39,5 +41,6 @@ service:
   type: ClusterIP
   ports:
   - protocol: TCP
+    name: http
     port: 80
     targetPort: 8080

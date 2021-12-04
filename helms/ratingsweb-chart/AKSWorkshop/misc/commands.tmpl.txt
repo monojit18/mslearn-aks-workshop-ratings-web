@@ -1,0 +1,22 @@
+tenantId=""
+subscriptionId=""
+clusterName="aks-workshop-cluster"
+resourceGroup="aks-workshop-rg"
+acrName=""
+
+az login --tenant $tenantId
+az aks get-credentials -g $resourceGroup -n $clusterName
+
+az acr build -t $acrName.azurecr.io/ratings-web:v1.0.0 -r $acrName .
+
+DEV
+===
+
+helm install ratingsweb-chart -n aks-workshop-dev ./ratingsweb-chart/ -f ./ratingsweb-chart/AKSWorkshop/values-dev.yaml
+helm upgrade ratingsweb-chart -n aks-workshop-dev ./ratingsweb-chart/ -f ./ratingsweb-chart/AKSWorkshop/values-dev.yaml
+helm uninstall ratingsweb-chart -n aks-workshop-dev
+
+
+
+
+

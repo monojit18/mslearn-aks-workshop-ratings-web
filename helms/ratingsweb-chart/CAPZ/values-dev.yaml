@@ -10,7 +10,7 @@ deployment:
   maxSurge: 1
   maxUnavailable: 1
   nodeSelector:
-    agentpool: capzapipool
+    agentpool: capzsyspool
   imagePullSecrets:
   - name: capz-acr-secret
   containers:

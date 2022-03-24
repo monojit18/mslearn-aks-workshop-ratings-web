@@ -1,0 +1,28 @@
+tenantId=""
+acrName=""
+baseFolderPath=""
+
+az login --tenant $tenantId
+az acr build -t $acrName.azurecr.io/ratings-web:v1.0.0 -r $acrName .
+
+alias k-capz="kubectl --kubeconfig=$baseFolderPath/Setup/capz-workshop-cluster.kubeconfig"
+alias helm-capz="helm --kubeconfig=$baseFolderPath/Setup/capz-workshop-cluster.kubeconfig"
+
+DEV
+===
+
+helm-capz install ratingsweb-chart -n capz-workshop-dev ./ratingsweb-chart/ -f ./ratingsweb-chart/CAPZ/values-dev.yaml
+helm-capz upgrade ratingsweb-chart -n capz-workshop-dev ./ratingsweb-chart/ -f ./ratingsweb-chart/AKSWorkshop/values-dev.yaml
+helm-capz uninstall ratingsweb-chart -n capz-workshop-dev
+
+QA
+==
+
+helm-capz install ratingsweb-chart -n capz-workshop-qa ./ratingsweb-chart/ -f ./ratingsweb-chart/CAPZ/values-qa.yaml
+helm-capz upgrade ratingsweb-chart -n capz-workshop-qa ./ratingsweb-chart/ -f ./ratingsweb-chart/CAPZ/values-qa.yaml
+helm-capz uninstall ratingsweb-chart -n capz-workshop-qa
+
+
+
+
+

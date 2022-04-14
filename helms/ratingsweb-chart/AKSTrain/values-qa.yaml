@@ -15,7 +15,7 @@ deployment:
   - name: aks-acr-secret
   containers:
   - name: ratingsweb-app
-    image: akstrnacr.azurecr.io/ratings-web:v1.0.0
+    image: <acr>/ratings-web:v1.0.0
     imagePullPolicy: IfNotPresent
     readinessPort: 8080
     readinessPath: /healthz
